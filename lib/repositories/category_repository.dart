@@ -39,7 +39,11 @@ class CategoryRepository {
 
   Future<void> insertCategory(CategoryModel category) async {
     final db = await database;
-    await db.insert('categories', category.toJson());
+    await db.insert(
+      'categories',
+      category.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
   Future<void> updateCategory(CategoryModel category) async {
@@ -49,6 +53,7 @@ class CategoryRepository {
       category.toJson(),
       where: 'id = ?',
       whereArgs: [category.id],
+      conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 

@@ -24,13 +24,6 @@ class ExpenseRepository {
 
   Future<void> _createDb(Database db, int version) async {
     await db.execute('''
-        CREATE TABLE categories (
-          id INTEGER PRIMARY KEY AUTOINCREMENT,
-          name TEXT NOT NULL
-        )
-      ''');
-
-    await db.execute('''
         CREATE TABLE expenses (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           title TEXT NOT NULL,
@@ -50,7 +43,11 @@ class ExpenseRepository {
 
   Future<void> insertExpense(ExpenseModel expense) async {
     final db = await database;
-    await db.insert('expenses', expense.toJson());
+    await db.insert(
+      'expenses',
+      expense.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
   Future<void> updateExpense(ExpenseModel expense) async {
@@ -60,6 +57,7 @@ class ExpenseRepository {
       expense.toJson(),
       where: 'id = ?',
       whereArgs: [expense.id],
+      conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 

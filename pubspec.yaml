@@ -42,6 +42,7 @@ dependencies:
   path_provider: ^2.0.15 # File storage path
   flutter_lints: ^3.0.0 # Best practices
   build_runner: ^2.1.7 # Code generation
+  fl_chart: ^0.70.2
 
 dev_dependencies:
   flutter_test:
